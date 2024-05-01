@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Kids Quiz</title>
+  <link rel="stylesheet" href="style5.css">
+  <style>
+    body {
+      background-image: url('bgz.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: top;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      position: relative;
+    }
+    .input-container {
+      margin-top: 20px;
+    }
+    input[type="text"] {
+      padding: 8px;
+      font-size: 16px;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+    /* New CSS for images */
+    .answer-image {
+      max-width: 300px;
+      max-height: 300px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" style="width: 900px;">
+    <h1>Module 8 : Quoi de neuf à la télé</h1>
+    <div class="quiz-box">
+      <div id="question" class="question">Mon premier est la première syllabe du mot <strong>commande</strong>. Mon second est un lieu où vivent les poissons. Mon troisième est la première lettre de l'alphabet. Mon tout est un appareil pour faire des films.</div>
+      <div class="input-container">
+        <input type="text" id="answerInput" placeholder="Entrez votre réponse">
+        <button id="submitAnswerBtn" class="submit-btn" style="background-color: rgb(0, 193, 0);border-width: 0px ;color: white;height: 37px;border-radius: 5px;">Soumettre</button>
+      </div>
+      <div id="result" class="result"></div>
+      <div id="timer" class="timer">Temps restant: <span id="countdown">10</span>s</div>
+      <!-- New image element -->
+      <img id="answerImage" class="answer-image" style="height: 150px;" src="">
+      <br>
+      <button id="changeQuestionBtn" class="change-btn" style="background-color: rgb(0, 193, 0);">Changer la question</button>
+      <audio id="correctAudio" src="correct.mp3"></audio> <!-- Add this line to include the correct sound effect -->
+    </div>
+  </div>
+
+  <script>
+    // script.js
+    const questions = [
+      {
+        question: "Mon premier est la première syllabe du mot commande. Mon second est un lieu où vivent les poissons. Mon troisième est la première lettre de l'alphabet. Mon tout est un appareil pour faire des films.",
+        answer: "Caméra",
+        image: "camera.jpg"
+      },
+      {
+        question: "Mon premier est un outil coupant. Mon deuxième est au milieu du visage. Mon troisième est à moi (au féminin). Mon tout est un lieu où on regarde des films.",
+        answer: "Cinéma",
+        image: "cinema.jpg"
+      },
+      {
+        question: "Mon premier est l'opposé de privé. Mon deuxième est souvent présent lors d'événements. Mon tout est l'ensemble des personnes présentes dans un lieu donné.",
+        answer: "Public",
+        image: "public.jpg"
+      },
+      // Add more questions as needed
+    ];
+
+    let currentQuestionIndex = 0;
+    const questionElement = document.getElementById('question');
+    const answerInputElement = document.getElementById('answerInput');
+    const submitAnswerBtn = document.getElementById('submitAnswerBtn');
+    const resultElement = document.getElementById('result');
+    const countdownElement = document.getElementById('countdown');
+    const changeQuestionBtn = document.getElementById('changeQuestionBtn');
+    const answerImageElement = document.getElementById('answerImage');
+    let timer; // Declare timer variable globally
+
+    function displayQuestion() {
+      questionElement.textContent = questions[currentQuestionIndex].question;
+      answerInputElement.value = "";
+      resultElement.textContent = "";
+      answerImageElement.src = ""; // Reset the image source
+      clearInterval(timer); // Clear the previous timer
+      startTimer(); // Start the timer again
+    }
+
+    function checkAnswer() {
+      const userAnswer = answerInputElement.value.trim().toLowerCase();
+      const correctAnswer = questions[currentQuestionIndex].answer.toLowerCase();
+      if (userAnswer === correctAnswer) {
+        resultElement.textContent = "Bravo!";
+        answerImageElement.src = questions[currentQuestionIndex].image;
+        correctAudio.play(); // Play correct sound effect
+
+      } else {
+        resultElement.textContent = "La réponse est "+correctAnswer;
+        answerImageElement.src = questions[currentQuestionIndex].image;
+
+      }
+      if (currentQuestionIndex === questions.length - 1) {
+        resultElement.textContent = "Test terminé!";
+        submitAnswerBtn.disabled = true; // Disable submit button after the test ends
+        changeQuestionBtn.disabled = true; // Disable change question button after the test ends
+      }
+    }
+
+    function startTimer() {
+      let timeLeft = 15;
+      countdownElement.textContent = timeLeft;
+      timer = setInterval(() => {
+        timeLeft--;
+        countdownElement.textContent = timeLeft;
+        if (timeLeft === 0) {
+          clearInterval(timer);
+          checkAnswer();
+        }
+      }, 1000);
+    }
+
+    submitAnswerBtn.addEventListener('click', () => {
+      checkAnswer();
+    });
+
+    changeQuestionBtn.addEventListener('click', () => {
+      currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
+      displayQuestion();
+    });
+
+    // Initial setup
+    displayQuestion();
+  </script>
+</body>
+</html>

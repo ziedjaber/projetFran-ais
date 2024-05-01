@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <link rel="stylesheet" href="style3.css">
+    <style>
+        body {
+            background-image: url('bgy.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position:top;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+        }
+        li{
+            list-style-type: square;
+        }
+        h4{
+            font-size: 22px;
+        }
+        h3{
+            font-size: 25px;
+        }
+        span{
+            font-size:20px;
+        }
+    </style>
+</head>
+<body>
+    <br><br><br>
+<div class="qa_box" id="quizContainer">
+    <div class="qa_header" >
+        <span>Module 6 : <span id="score">Bon appétit !</span></span>
+    </div>
+    <h4 >Choisir la bonne réponse</h4>
+
+    <div class="qa_body" >
+        <div class="qa_set active">
+            <h4>On me mange <br> Je suis un légume <br> Je suis rond et rouge.Je suis : ....</h4>
+        
+            <div class="qa_ans_row">
+                <input type="radio" name="a1" value="incorrect">
+                <span>Pomme</span>  
+            </div>
+            <div class="qa_ans_row">
+                <input type="radio" name="a1" value="correct">
+                <span>Tomate</span>  
+            </div>
+            <div class="qa_ans_row">
+                <input type="radio" name="a1" value="incorrect">
+                <span>Orange</span>  
+            </div>
+        </div>
+        <div class="qa_set active">
+            <h4>On me boit <br> je n'ai pas de couleur. Je suis ...</h4>
+
+            <div class="qa_ans_row">
+                <input type="radio" name="a2" value="incorrect">
+                <span>Le lait</span>  
+            </div>
+            <div class="qa_ans_row">
+                <input type="radio" name="a2" value="incorrect">
+                <span>Un thé</span>  
+            </div>
+            <div class="qa_ans_row">
+                <input type="radio" name="a2" value="correct">
+                <span>De l'eau</span>  
+            </div>
+        </div>
+        <div class="qa_set active">
+            <h4>On me mange.<br> Je suis blanc et oval.<br> Les poules me pondent. Je suis ...</h4>
+
+        
+            <div class="qa_ans_row">
+                <input type="radio" name="a3" value="incorrect">
+                <span>Du beurre</span>  
+            </div>
+            <div class="qa_ans_row">
+                <input type="radio" name="a3" value="incorrect">
+                <span>Parfume</span>  
+            </div>
+            <div class="qa_ans_row">
+                <input type="radio" name="a3" value="correct">
+                <span>Un oeuf</span>  
+            </div>
+        </div>
+        <div class="qa_set active">
+            <h4>On me boit.<br> Je suis blanc.<br>Les vaches me fabriquent .Je suis ...</h4>
+
+        
+            <div class="qa_ans_row">
+                <input type="radio" name="a4" value="incorrect">
+                <span>L'eau</span>  
+            </div>
+            <div class="qa_ans_row">
+                <input type="radio" name="a4" value="correct">
+                <span>Le lait</span>  
+            </div>
+            <div class="qa_ans_row">
+                <input type="radio" name="a4" value="incorrect">
+                <span>La farine</span>  
+            </div>
+        </div>
+        <div class="qa_set active">
+            <h4>On me mange<br> Je suis un fruit on doit me peler. Je suis</h4>
+
+        
+            <div class="qa_ans_row">
+                <input type="radio" name="a5" value="incorrect">
+                <span>Une pomme</span>  
+            </div>
+            <div class="qa_ans_row">
+                <input type="radio" name="a5" value="correct">
+                <span>Une orange</span>  
+            </div>
+            <div class="qa_ans_row">
+                <input type="radio" name="a5" value="incorrect">
+                <span>La tomate</span>  
+            </div>
+        </div>
+    </div>
+    <div class="qa_footer">
+        <span class="btn1" id="submit">Confirmer</span>
+        <span class="btn1" id="repeat" style="display: none;"><button onclick="r()" style="font-family: Arial, Helvetica, sans-serif;">Rejouer</button></span>
+    </div>
+</div>
+
+<div id="resultContainer" class="result-container" style="display: none;">
+    <div id="resultMessage" class="result-message"></div>
+    <div class="result-score" style="font-family: Arial, Helvetica, sans-serif;text-align: center;">Score Final <span id="finalScore" style="font-family: Arial, Helvetica, sans-serif;">0</span>/<span id="totalQuestions" style="font-family: Arial, Helvetica, sans-serif;">0</span></div>
+    <h5 id="r" style="font-size: 22px;"></h5>
+    <div style="text-align: center;">
+        <span class="btn1" id="repeat"><button onclick="r()" style="background-color: transparent; color: #fff; border-color: transparent;font-size: 20px;" style="font-family: Arial, Helvetica, sans-serif;">Rejouer</button></span>
+    </div>
+</div>
+
+<script>
+    let t=[];
+    function r(){
+        location.reload();
+    }
+    function playSound(soundFilePath) {
+    var audio = new Audio(soundFilePath);
+    audio.play();
+}
+    var currentQuestion = 0;
+    var totalQuestions = document.querySelectorAll('.qa_set').length;
+    var correctAnswers = 0;
+
+    function showQuestion(index) {
+        var questions = document.querySelectorAll('.qa_set');
+        questions.forEach(function(question, i) {
+            if (i === index) {
+                question.classList.add('active');
+            } else {
+                question.classList.remove('active');
+            }
+        });
+    }
+    var correctAnswersArray = ["Orange", "De l'eau", "Un oeuf", "Le lait", "Une orange"];
+
+function calculateScore() {
+    var totalScore = 0;
+    var answers = document.querySelectorAll('input[type="radio"]:checked');
+    var t = []; // Array to store correction messages
+    answers.forEach(function(answer, index) {
+        if (answer.value === 'correct') {
+            totalScore++;
+            t.push("Votre réponse à la question n°" + (index) + " est correcte.");
+        } else {
+            var correctAnswer = correctAnswersArray[index];
+            t.push("Votre réponse à la question n°" + (index) + " est incorrecte. La réponse correcte est : " + correctAnswer);
+
+        }
+    });
+    document.getElementById('score').textContent = totalScore;
+    return totalScore;
+}
+var x = document.getElementById("r");
+
+function showResult() {
+    var finalScore = calculateScore();
+    var totalQuestions = 5; // Assuming there are 5 questions
+    var t = []; // Array to store correction messages
+    var resultMessage = document.getElementById('resultMessage');
+    var resultText = "";
+    if (finalScore === totalQuestions) {
+        resultText = "Wow, c'est excellent!";
+    } else if (finalScore >= 3) {
+        resultText = "Bien";
+    } else {
+        resultText = "Essayer une autre fois";
+    }
+    
+    var answers = document.querySelectorAll('input[type="radio"]:checked');
+    answers.forEach(function(answer, index) {
+        var questionNumber = index + 1;
+        var isCorrect = answer.value === 'correct';
+        var correctAnswer = correctAnswersArray[index];
+        var message = "<h4 style='display:inline'>Votre réponse à la question n°" + questionNumber + " est ";
+        message += isCorrect ? '<h3 style="color: green;display: inline;">correcte.</h3></h4>' : '<h3 style="color: red;display:inline;">incorrecte. La réponse correcte est : ' + correctAnswer + '</h3></h4>';
+        t.push(message);
+    });
+    var resultContainer = document.getElementById('resultContainer');
+    var x = document.createElement("ul");
+    t.forEach(function(message) {
+        var li = document.createElement("li");
+        li.innerHTML = message; // Use innerHTML to parse HTML tags
+        x.appendChild(li);
+    });
+    resultContainer.appendChild(x);
+    resultMessage.textContent = resultText;
+    resultMessage.style.textAlign = "center";
+    document.getElementById('finalScore').textContent = finalScore;
+    document.getElementById('totalQuestions').textContent = totalQuestions;
+    document.getElementById('quizContainer').style.display = 'none';
+    resultContainer.style.display = 'block';
+    resultContainer.style.width = '950px'; // Set width to 750px
+    resultContainer.style.textAlign = 'left';
+    document.getElementById('repeat').style.display = 'block';
+}
+
+
+
+
+
+function nextQuestion() {
+    var selectedAnswers = document.querySelectorAll('input[type="radio"]:checked');
+    if (selectedAnswers.length === currentQuestion + 1) {
+        currentQuestion++;
+        if (currentQuestion < totalQuestions) {
+            showQuestion(currentQuestion);
+        } else {
+            showResult();
+        }
+    } else {
+        alert("Veuillez sélectionner une réponse pour cette question.");
+    }
+}
+
+document.getElementById('submit').addEventListener('click', function() {
+    nextQuestion();
+});
+
+document.getElementById('repeat').addEventListener('click', function() {
+    currentQuestion = 0;
+    document.getElementById('resultContainer').style.display = 'none';
+    document.getElementById('score').textContent = '0';
+    showQuestion(currentQuestion);
+    document.getElementById('quizContainer').style.display = 'block';
+});
+
+showQuestion(currentQuestion);
+</script>
+</body>
+</html>

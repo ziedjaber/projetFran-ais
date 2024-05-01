@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Choice Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+body {
+    font-family: Arial, sans-serif;
+}
+
+#quiz-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.correct {
+    background-color: #d4edda; /* Green background for correct answers */
+}
+
+.wrong {
+    background-color: #f8d7da; /* Red background for wrong answers */
+}
+
+#choices {
+    margin-top: 10px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+
+    </style>
+</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Choice Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="quiz-container">
+        <h2 id="question"></h2>
+        <div id="choices"></div>
+        <button id="submit-btn">Submit Answer</button>
+        <button id="correction-btn" onclick="showCorrection()" style="display: none;">Show Correction</button>
+        <button id="previous-btn" onclick="showPreviousQuestion()">Previous</button>
+        <button id="next-btn" onclick="showNextQuestion()">Next</button>
+        <p id="result"></p>
+        <p id="correction"></p>
+    </div>
+
+    <script>
+const quizData = [
+    {
+        question: 'What is the capital of France?',
+        choices: ['London', 'Paris', 'Rome', 'Berlin'],
+        correctAnswer: 'Paris'
+    },
+    {
+        question: 'What is 2 + 2?',
+        choices: ['3', '4', '5', '6'],
+        correctAnswer: '4'
+    },
+    {
+        question: 'Who wrote "Romeo and Juliet"?',
+        choices: ['Charles Dickens', 'William Shakespeare', 'Jane Austen', 'Leo Tolstoy'],
+        correctAnswer: 'William Shakespeare'
+    }
+];
+
+const questionElement = document.getElementById('question');
+const choicesElement = document.getElementById('choices');
+const resultElement = document.getElementById('result');
+const correctionElement = document.getElementById('correction');
+const quizContainer = document.getElementById('quiz-container');
+const submitButton = document.getElementById('submit-btn');
+const correctionButton = document.getElementById('correction-btn');
+const previousButton = document.getElementById('previous-btn');
+const nextButton = document.getElementById('next-btn');
+
+let currentQuestion = 0;
+let score = 0;
+let answers = [];
+
+function loadQuestion() {
+    const currentQuizData = quizData[currentQuestion];
+    questionElement.innerText = currentQuizData.question;
+    choicesElement.innerHTML = '';
+    currentQuizData.choices.forEach(choice => {
+        const button = document.createElement('button');
+        button.innerText = choice;
+        button.addEventListener('click', () => checkAnswer(choice));
+        choicesElement.appendChild(button);
+    });
+}
+
+function checkAnswer(answer) {
+    const currentQuizData = quizData[currentQuestion];
+    answers[currentQuestion] = answer;
+    if (answer === currentQuizData.correctAnswer) {
+        score++;
+    }
+    currentQuestion++;
+    if (currentQuestion < quizData.length) {
+        loadQuestion();
+    } else {
+        showResult();
+    }
+}
+
+function showResult() {
+    questionElement.innerText = '';
+    choicesElement.innerHTML = '';
+    resultElement.innerText = `You scored ${score} out of ${quizData.length} questions.`;
+    submitButton.style.display = 'none';
+    correctionButton.style.display = 'inline-block';
+    previousButton.style.display = 'none';
+    nextButton.style.display = 'none';
+}
+
+function showCorrection() {
+    correctionElement.style.display = 'block';
+    displayCorrection();
+}
+
+function displayCorrection() {
+    correctionElement.innerHTML = '';
+    quizData.forEach((question, index) => {
+        const questionEl = document.createElement('div');
+        questionEl.innerText = `${index + 1}. ${question.question}`;
+        const answerEl = document.createElement('p');
+        answerEl.innerText = `Your Answer: ${answers[index] || '-'}`;
+        const correctionEl = document.createElement('p');
+        correctionEl.innerText = `Correct Answer: ${question.correctAnswer}`;
+        questionEl.appendChild(answerEl);
+        questionEl.appendChild(correctionEl);
+        correctionElement.appendChild(questionEl);
+    });
+}
+
+loadQuestion();
+
+    </script>
+</body>
+</html>
+
+</html>

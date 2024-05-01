@@ -1,0 +1,12 @@
+var seconds = 10;
+    var timer = setInterval(function() {
+        document.getElementById('timer').innerHTML = seconds + 's';
+        seconds--;
+        if (seconds < 0) {
+            clearInterval(timer);
+            document.getElementById('timer').innerHTML = "Timeout";
+            document.getElementById('buttons-container').style.display = "flex"; // Show buttons
+        }
+    }, 1000);
+
+id="change-content-btn

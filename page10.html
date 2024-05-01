@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Kids Quiz</title>
+  <link rel="stylesheet" href="style5.css">
+  <style>
+    body {
+      background-image: url('bgz.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: top;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      position: relative;
+    }
+    .input-container {
+      margin-top: 20px;
+    }
+    input[type="text"] {
+      padding: 8px;
+      font-size: 16px;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+    /* New CSS for images */
+    .answer-image {
+      max-width: 300px;
+      max-height: 300px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Module 10 : Conte-Nous une histoire dis!</h1>
+    <div class="quiz-box">
+      <div id="question" class="question">Je mange de l'herbe et je donne du lait . J'ai deux cornes</div>
+      <div class="input-container">
+        <input type="text" id="answerInput" placeholder="Entrez votre réponse">
+        <button id="submitAnswerBtn" class="submit-btn" style="background-color: rgb(0, 193, 0);border-width: 0px ;color: white;height: 37px;border-radius: 5px;">Soumettre</button>
+      </div>
+      <div id="result" class="result"></div>
+      <div id="timer" class="timer">Temps restant: <span id="countdown">10</span>s</div>
+      <!-- New image element -->
+      <img id="answerImage" class="answer-image" src="" style="height: 150px;">
+      <br>
+      <button id="changeQuestionBtn" class="change-btn" style="background-color: rgb(0, 193, 0);">Changer la question</button>
+      <audio id="correctAudio" src="correct.mp3"></audio> <!-- Add this line to include the correct sound effect -->
+
+    </div>
+  </div>
+
+  <script>
+    // script.js
+    const questions = [
+      {
+        question: "Je mange de l'herbe et je donne du lait . J'ai deux cornes",
+        answer: "La vache",
+        image: "vache.jpg"
+      },
+      {
+        question: "Je suis un animal qui grimpe et saute d'arbre en arbre. J'adore les fruits surtout les bananes",
+        answer: "Le singe",
+        image: "monkey.jpg"
+      },
+      {
+        question: "J'ai des plumes , je ne vole pas ,je suis dans la ferme et je donne des oeufs",
+        answer: "La poule",
+        image: "poule.png"
+      },
+      // Add more questions as needed
+    ];
+
+    let currentQuestionIndex = 0;
+    const questionElement = document.getElementById('question');
+    const answerInputElement = document.getElementById('answerInput');
+    const submitAnswerBtn = document.getElementById('submitAnswerBtn');
+    const resultElement = document.getElementById('result');
+    const countdownElement = document.getElementById('countdown');
+    const changeQuestionBtn = document.getElementById('changeQuestionBtn');
+    const answerImageElement = document.getElementById('answerImage');
+    let timer; // Declare timer variable globally
+
+    function displayQuestion() {
+      questionElement.textContent = questions[currentQuestionIndex].question;
+      answerInputElement.value = "";
+      resultElement.textContent = "";
+      answerImageElement.src = ""; // Reset the image source
+      clearInterval(timer); // Clear the previous timer
+      startTimer(); // Start the timer again
+    }
+
+    function checkAnswer() {
+      const userAnswer = answerInputElement.value.trim().toLowerCase();
+      const correctAnswer = questions[currentQuestionIndex].answer.toLowerCase();
+      if (userAnswer === correctAnswer) {
+        resultElement.textContent = "Bravo!";
+        answerImageElement.src = questions[currentQuestionIndex].image;
+        correctAudio.play(); // Play correct sound effect
+
+      } else {
+        resultElement.textContent = "La réponse est "+correctAnswer;
+        answerImageElement.src = questions[currentQuestionIndex].image;
+      }
+      if (currentQuestionIndex === questions.length - 1) {
+        resultElement.textContent = "Test terminé!";
+        submitAnswerBtn.disabled = true; // Disable submit button after the test ends
+        changeQuestionBtn.disabled = true; // Disable change question button after the test ends
+      }
+    }
+
+    function startTimer() {
+      let timeLeft = 10;
+      countdownElement.textContent = timeLeft;
+      timer = setInterval(() => {
+        timeLeft--;
+        countdownElement.textContent = timeLeft;
+        if (timeLeft === 0) {
+          clearInterval(timer);
+          checkAnswer();
+        }
+      }, 1000);
+    }
+
+    submitAnswerBtn.addEventListener('click', () => {
+      checkAnswer();
+    });
+
+    changeQuestionBtn.addEventListener('click', () => {
+      currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
+      displayQuestion();
+    });
+
+    // Initial setup
+    displayQuestion();
+  </script>
+</body>
+</html>

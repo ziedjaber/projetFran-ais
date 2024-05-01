@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title class="title">Document</title>
+    <link rel="stylesheet" href="style1.css">
+    <style>
+        body {
+            background-image: url('bgy.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: top;
+            margin: 0;
+            padding: 0;
+            height: 740px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        img {
+            width: 500px;
+            height: 420px;
+            position: relative;
+            z-index: 1; /* Ensure the image stays above the text */
+        }
+        .text-container {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 2; /* Ensure the text appears above the image */
+            color: rgb(255, 251, 0); /* Set the text color */
+            text-align: center; /* Align text to center */
+            font-family: Arial, sans-serif; /* Specify font family */
+        }
+        .c1, .c2{
+            font-size: 36px; /* Set font size */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow */
+            animation: glow 2s infinite alternate; /* Add animation */
+        }
+        table {
+            margin-top: -180px;
+        }
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px rgb(0, 0, 0), 0 0 20px rgb(0, 0, 83), 0 0 30px rgb(76, 76, 0), 0 0 40px rgb(0, 0, 0), 0 0 50px rgb(146, 146, 146), 0 0 60px rgb(146, 146, 146), 0 0 70px rgb(118, 118, 118);
+            }
+            to {
+                text-shadow: 0 0 20px rgb(1, 1, 2), 0rgb(0, 0, 0)0px #00f, 0 0 60px rgb(0, 105, 105), 0 0 80px rgb(0, 0, 0), 0 0 100px rgb(0, 0, 0), 0 rgb(112, 112, 112)0px rgb(0, 0, 0)gb(32, 48, 48);
+            }
+        }
+        .c1{
+            margin-top: -290px;
+            border-radius: 5px;
+        }
+        .c2{
+            margin-top: 90px;
+            margin-left: 50px;
+        }
+       .a {
+            width: 500px;
+            height: 420px;
+            position: relative;
+            z-index: 1; /* Ensure the image stays above the text */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Add shadow effect */
+        }
+        /* Style for the timer */
+        #timer {
+            position: absolute;
+            top: 20px;
+            right: 50px;
+            width: 150px; /* Adjust the width and height to control the size of the circular timer */
+            height: 150px;
+            background-color: rgb(63, 63, 63);
+            color: #ffffff;
+            border-radius: 50%; /* Make it circular */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            font-weight: bold;
+            z-index: 3; /* Ensure the timer appears above the image and text */
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Add shadow effect */
+            animation: pulse 1.5s infinite alternate;
+        }
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.1);
+            }
+        }
+        #timer:before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid transparent;
+            border-top-color: rgba(255, 255, 255, 0.5);
+            border-left-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: spin 10s linear infinite;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        /* Style for the "Change Content" button */
+        #change-content-btn {
+            background-color: #4CAF50; /* Green background */
+            border: none; /* No border */
+            color: white; /* White text */
+            padding: 15px 32px; /* Padding */
+            text-align: center; /* Center text */
+            text-decoration: none; /* No text decoration */
+            display: inline-block; /* Display as inline-block */
+            font-size: 16px; /* Font size */
+            margin-top: 20px; /* Margin top */
+            cursor: pointer; /* Cursor on hover */
+            border-radius: 8px; /* Rounded corners */
+            transition: background-color 0.3s; /* Smooth transition on hover */
+            pointer-events: none; /* Initially disable the button */
+            display: none;
+        }
+        #change-content-btn:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+        /* Style général du label */
+label {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: #01af98; /* Couleur du texte */
+  margin-bottom: 8px; /* Espacement en bas */
+  display:inline; /* Pour placer chaque label sur une ligne */
+}
+.input-container {
+    display: flex; /* Utiliser la mise en page flexbox */
+    align-items: center; /* Aligner les éléments sur la même ligne verticalement */
+    margin-top: 20px; /* Espacement supplémentaire au-dessus */
+}
+/* Style de l'input texte */
+input[type="text"] {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  padding: 10px; /* Espacement interne */
+  border: 1px solid #ccc; /* Bordure grise */
+  border-radius: 5px; /* Coins arrondis */
+  width: 300px; /* Largeur de l'input */
+  cursor: unset;
+  background-color: #008cff;
+  color: white;
+}
+.input-container input[type="text"] {
+    flex: 1; /* Le champ texte prendra autant d'espace disponible */
+    margin-right: 10px; /* Espacement à droite du champ texte */
+}
+input[type="text"]::placeholder {
+  color: #ffffff; /* Couleur du texte */
+}
+input[type="text"]:focus {
+  outline: none; /* Supprimer la bordure de focus par défaut */
+  border-color: #ffffff; /* Bordure bleue */
+  box-shadow: 0 0 5px #66afe9; /* Légère ombre */
+  background-color: #008cff;
+  color: white;
+}
+#result{
+    width: 200px;
+    display: inline;
+    background-color: #00b909;
+    color: white;
+    font-size: 15px;
+}
+.result-message {
+    background-color: #00b909;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    font-size: 20px;
+    display: inline;
+
+}
+    </style>
+</head>
+<body>
+    <div id="timer"></div>
+    <img src="flower.PNG" alt="" id="image">
+    <div class="text-container">
+        <div class="c1">
+            <br>
+            <h5 id="c1">voi</h5>
+        </div>
+        <div class="c2">
+            <pre><b class="c3">tu</b>         <b class="c4">re</b></pre>
+        </div>
+    </div>
+    <div id="result" style="background-color: #00b909;color: aliceblue; border-radius: 5px; width:80px; height: 26px;  font-size: 20px;display:none;margin-bottom: 15px;"></div>
+    <img src="voiture.jpg" class="a" id="main-image" alt="" style="border-radius: 12px;width: 280px; height: 140px;">
+    <div class="input-container">
+        <input type="text" id="inputText" name="inputText" placeholder="Réponse">
+        <button id="confirm-btn" style="background-color: #00b909;color: aliceblue; border-radius: 5px; width:120px; height: 35px;  font-size: 20px;">Vérifier</button>
+    </div>
+    
+    <div id="buttons-container">
+        <button id="change-content-btn" onclick="changeContent()" style="background-color: #00b909;">Passer</button>
+    </div>
+    <script>
+        var seconds = 10;
+        var timer = setInterval(function () {
+            document.getElementById('timer').innerHTML = seconds + 's';
+            seconds--;
+            if (seconds < 0) {
+                clearInterval(timer);
+                document.getElementById('timer').innerHTML = "0s";
+                let t=document.getElementById('timer');
+                t.style.fontSize = "50px";
+                document.getElementById('buttons-container').style.display = "flex"; // Show buttons
+                document.getElementById('change-content-btn').style.pointerEvents = "auto"; // Enable the button
+            }
+        }, 1000);
+        let i = 0;
+        let z = 2;
+        let y = 1;
+        let x = 0;
+        let t1 = ['mé', 't', 'ro', 'é', 'lo', 'v', 'se', 'maî', 'tres', 'rec', 'teur', 'di', 're', 'ux', 'heu', 'boi', 'fram', 'se', 'que', 'ti', 'mous', 'ba', 'rq', 'ue'];
+        let t2 = ["metro.jpg", "bike.jpg", "maitresse.jpg", "directeur.jpg", "happy.jpg", "fromboise.jpg", "namousa.jpg", "boat.jpg"];
+        function changeContent() {
+            document.getElementById("change-content-btn").disabled = true;
+
+            var seconds = 10;
+            var timer = setInterval(function () {
+                document.getElementById('timer').innerHTML = seconds + 's';
+                seconds--;
+                if (seconds < 0) {
+                    clearInterval(timer);
+                    document.getElementById('timer').innerHTML = "0s";
+                    let t=document.getElementById('timer');
+                     t.style.fontSize = "50px";
+                    document.getElementById('buttons-container').style.display = "flex"; // Show buttons
+                    document.getElementById('change-content-btn').style.pointerEvents = "auto"; // Enable the button
+                    document.getElementById("change-content-btn").disabled = false;
+
+                }
+            }, 1000);
+            document.getElementById("result").display="none";
+            document.getElementById("result").style.backgroundColor = "transparent";
+
+            if (z > t1.length) {
+                alert('Test terminée');
+                document.getElementById('result').display="block";
+                let b=document.getElementById('result');
+                b.textContent=score;
+                b.style.fontSize="20px";
+                return;
+            }
+            let elements = document.querySelectorAll('.text-container pre b');
+            let e = document.getElementById('c1');
+            let image = document.getElementById('main-image');
+            e.textContent = t1[i];
+            elements[0].textContent = t1[y];
+            elements[1].textContent = t1[z];
+            image.src = t2[x];
+            i += 3;
+            y += 3;
+            x++;
+            z += 3;
+            document.getElementById("result").textContent = "";
+            document.getElementById("change-content-btn").style.display = "none";
+            let b=document.getElementById("change-content-btn");
+            
+            var textContainer = document.querySelector('.text-container');
+                var image1 = document.getElementById('image');
+                var imageBottom = image1.offsetTop + image1.offsetHeight;
+                var desiredDistance = -100;
+                var newTopPosition = imageBottom + desiredDistance;
+                textContainer.style.top = newTopPosition + 'px';
+
+            
+        }
+
+        function playAudio() {
+            var audio = new Audio('music.mp3');
+            audio.play();
+        }
+        let score
+        function checkAnswer() {
+            var userInput = document.getElementById("inputText").value.trim().toLowerCase(); // Get user's input and convert to lowercase
+            console.log("la valeur de i est " + i)
+            let answer;
+            if (i === 0) {
+                answer = "voiture";
+            } else if (i === 3) {
+                answer = "métro";
+            } else if (i === 6) {
+                answer = "vélo";
+            } else if (i === 9) {
+                answer = "maîtresse";
+            } else if (i === 12) {
+                answer = "directeur";
+            } else if (i === 15) {
+                answer = "heureux";
+            } else if (i === 18) {
+                answer = "framboise";
+            } else if (i === 21) {
+                answer = "moustique";
+            } else {
+                answer = "barque";
+            }
+            if (userInput === answer) {
+                var resultElement = document.getElementById("result");
+                resultElement.textContent = "Bravo! Votre réponse est correcte";
+                resultElement.style.display = "inline";
+                resultElement.style.fontSize = "20px";
+                resultElement.style.textAlign = "center";
+                resultElement.style.backgroundColor = "#00b909";
+                document.getElementById("change-content-btn").style.display = "inline-block";
+                let x=document.getElementById("inputText");
+                x.value="";
+                playAudio();
+
+                var textContainer = document.querySelector('.text-container');
+                var image = document.getElementById('image');
+                var imageBottom = image.offsetTop + image.offsetHeight;
+                var desiredDistance = -100;
+                var newTopPosition = imageBottom + desiredDistance;
+                textContainer.style.top = newTopPosition + 'px';
+                var textContainer = document.querySelector('.text-container');
+                textContainer.style.marginTop = "20px";
+                score++;
+                }
+            
+            else {
+                document.getElementById("result").textContent = "Désolé! Votre réponse est incorrecte";
+                var resultElement = document.getElementById("result");
+                resultElement.style.textAlign = "center";
+
+                resultElement.style.fontSize = "22px";
+                document.getElementById("result").style.backgroundColor = "red";
+                document.getElementById("result").style.display = "block"; // Show the result
+                document.getElementById("change-content-btn").style.display = "none";
+
+                var textContainer = document.querySelector('.text-container');
+                var image = document.getElementById('image');
+                var imageBottom = image.offsetTop + image.offsetHeight;
+                var desiredDistance = -100;
+                var newTopPosition = imageBottom + desiredDistance;
+                textContainer.style.top = newTopPosition + 'px';
+                var textContainer = document.querySelector('.text-container');
+                textContainer.style.marginTop = "20px";
+
+            }
+            document.getElementById("inputText").value = "";
+        }
+        document.getElementById("confirm-btn").addEventListener("click", checkAnswer);
+    </script>
+</body>
+
+</html>
