@@ -84,7 +84,7 @@
             background-color: rgb(60, 60, 60);
             color: #ffffff;
             border-radius: 50%; /* Make it circular */
-            display: flex;
+            display: none;
             justify-content: center;
             align-items: center;
             font-size: 40px;
@@ -214,7 +214,7 @@ input[type="text"]:focus {
     <script>
         let score=0;
         let test
-        var seconds = 10;
+        var seconds = 1;
         var timer = setInterval(function () {
             document.getElementById('timer').innerHTML = seconds + 's';
             seconds--;
@@ -363,6 +363,34 @@ input[type="text"]:focus {
                 document.getElementById("change-content-btn").style.display = "none";
                 updateTextContainerPosition();
             }
+            if (score === 9) {
+        // Clear the body content
+            document.body.innerHTML = '';
+
+            setTimeout(function() {
+            // Create a div to contain the final score and the "Rejouer" button
+            var containerDiv = document.createElement("div");
+            containerDiv.style = "width: 400px; height: 130px;font-size:30px ;background-color: #008cff;color:white ; text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 10px;";
+
+            // Create a div to display the final score
+            var scoreDiv = document.createElement("div");
+            scoreDiv.textContent = "Score final: " + score + "/9";
+            scoreDiv.style = "font-size: 30px; color: white; line-height: 50px; border-bottom: 1px solid white;";
+            containerDiv.appendChild(scoreDiv);
+
+            // Create the "Rejouer" button
+            var playAgainButton = document.createElement("button");
+            playAgainButton.textContent = "Rejouer";
+            playAgainButton.onclick = function() {
+                location.reload(); // Reload the page to play again
+            };
+            playAgainButton.style = "margin-top: 20px;font-size:25px;padding: 10px 20px; background-color: #00b909; color: white; border: none; border-radius: 5px; cursor: pointer;text-align: center;";
+            containerDiv.appendChild(playAgainButton);
+
+            // Append the container div to the body
+            document.body.appendChild(containerDiv);
+        }, 1000);
+    }
     
             function updateTextContainerPosition() {
     

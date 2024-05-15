@@ -93,6 +93,8 @@
             border: 2px solid rgba(255, 255, 255, 0.5);
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Add shadow effect */
             animation: pulse 1.5s infinite alternate;
+            display: none;
+
         }
 
         @keyframes pulse {
@@ -114,6 +116,8 @@
             border-left-color: rgba(255, 255, 255, 0.5);
             border-radius: 50%;
             animation: spin 10s linear infinite;
+            display: none;
+
         }
 
         @keyframes spin {
@@ -223,15 +227,17 @@ input[type="text"]:focus {
     <br>
     <div class="input-container">
         <input type="text" id="inputText" name="inputText" placeholder="Réponse">
-        <button id="confirm-btn" style="background-color: #00b909;color: aliceblue; border-radius: 5px; width:120px; height: 35px;  font-size: 20px;">Vérifier</button>
+        <button id="confirm-btn" style="background-color: #00b909;color: aliceblue; border-radius: 5px;cursor: pointer; width:120px; height: 35px;  font-size: 20px;">Vérifier</button>
     </div>
     <br>
     <div id="buttons-container">
         <button id="change-content-btn" style="background-color: #00b909;" onclick="changeContent()">Suivant</button>
     </div>
     <script>
-        var seconds = 10;
+        var seconds = 1;
         let test=0;
+        let s = 0;
+
         var timer = setInterval(function () {
             document.getElementById('timer').innerHTML = seconds + 's';
             seconds--;
@@ -253,7 +259,7 @@ input[type="text"]:focus {
         let score=0;
         function changeContent() {
             document.getElementById("change-content-btn").disabled = true;
-            var seconds = 10;
+            var seconds = 1;
             var timer = setInterval(function () {
                 document.getElementById('timer').innerHTML = seconds + 's';
                 seconds--;
@@ -364,7 +370,7 @@ input[type="text"]:focus {
 
             // Append the container div to the body
             document.body.appendChild(containerDiv);
-        }, 3000);
+        }, 1000);
     }
 } else {
     // Handle incorrect answer

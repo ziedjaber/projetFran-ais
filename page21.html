@@ -77,7 +77,7 @@
             background-color: rgb(63, 63, 63);
             color: #ffffff;
             border-radius: 50%; /* Make it circular */
-            display: flex;
+            display: none;
             justify-content: center;
             align-items: center;
             font-size: 40px;
@@ -105,6 +105,7 @@
             border-left-color: rgba(255, 255, 255, 0.5);
             border-radius: 50%;
             animation: spin 10s linear infinite;
+            display: none;
         }
         @keyframes spin {
             to {
@@ -212,153 +213,183 @@ input[type="text"]:focus {
         <button id="change-content-btn" onclick="changeContent()" style="background-color: #00b909;">Passer</button>
     </div>
     <script>
-        var seconds = 10;
-        var timer = setInterval(function () {
-            document.getElementById('timer').innerHTML = seconds + 's';
-            seconds--;
-            if (seconds < 0) {
-                clearInterval(timer);
-                document.getElementById('timer').innerHTML = "0s";
-                let t=document.getElementById('timer');
-                t.style.fontSize = "50px";
-                document.getElementById('buttons-container').style.display = "flex"; // Show buttons
-                document.getElementById('change-content-btn').style.pointerEvents = "auto"; // Enable the button
-            }
+ var seconds = 1;
+var timer = setInterval(function () {
+    document.getElementById('timer').innerHTML = seconds + 's';
+    seconds--;
+    if (seconds < 0) {
+        clearInterval(timer);
+        document.getElementById('timer').innerHTML = "0s";
+        let t=document.getElementById('timer');
+        t.style.fontSize = "50px";
+        document.getElementById('buttons-container').style.display = "flex"; // Show buttons
+        document.getElementById('change-content-btn').style.pointerEvents = "auto"; // Enable the button
+    }
+}, 1000);
+let i = 0;
+let z = 2;
+let y = 1;
+let x = 0;
+let t1 = ['mé', 't', 'ro', 'é', 'lo', 'v', 'se', 'maî', 'tres', 'rec', 'teur', 'di', 're', 'ux', 'heu', 'boi', 'fram', 'se', 'que', 'ti', 'mous', 'ba', 'rq', 'ue'];
+let t2 = ["metro.jpg", "bike.jpg", "maitresse.jpg", "directeur.jpg", "happy.jpg", "fromboise.jpg", "namousa.jpg", "boat.jpg"];
+
+function changeContent() {
+    document.getElementById("change-content-btn").disabled = true;
+
+    var seconds = 1;
+    var timer = setInterval(function () {
+        document.getElementById('timer').innerHTML = seconds + 's';
+        seconds--;
+        if (seconds < 0) {
+            clearInterval(timer);
+            document.getElementById('timer').innerHTML = "0s";
+            let t=document.getElementById('timer');
+             t.style.fontSize = "50px";
+            document.getElementById('buttons-container').style.display = "flex"; // Show buttons
+            document.getElementById('change-content-btn').style.pointerEvents = "auto"; // Enable the button
+            document.getElementById("change-content-btn").disabled = false;
+
+        }
+    }, 1000);
+    document.getElementById("result").display="none";
+    document.getElementById("result").style.backgroundColor = "transparent";
+
+    if (z > t1.length) {
+        alert('Test terminée');
+        document.getElementById('result').display="block";
+        let b=document.getElementById('result');
+        b.textContent=score;
+        b.style.fontSize="20px";
+        document.body.innerHTML = '';
+
+        setTimeout(function() {
+            // Create a div to contain the final score and the "Rejouer" button
+        var containerDiv = document.createElement("div");
+        containerDiv.style = "width: 400px; height: 130px;font-size:30px ;background-color: #008cff;color:white ; text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 10px;";
+
+            // Create a div to display the final score
+        var scoreDiv = document.createElement("div");
+        scoreDiv.textContent = "Score final: " + score + "/9";
+        scoreDiv.style = "font-size: 30px; color: white; line-height: 50px; border-bottom: 1px solid white;";
+        containerDiv.appendChild(scoreDiv);
+
+            // Create the "Rejouer" button
+        var playAgainButton = document.createElement("button");
+        playAgainButton.textContent = "Rejouer";
+        playAgainButton.onclick = function() {
+        location.reload(); // Reload the page to play again
+        };
+        playAgainButton.style = "margin-top: 20px;font-size:25px;padding: 10px 20px; background-color: #00b909; color: white; border: none; border-radius: 5px; cursor: pointer;text-align: center;";
+        containerDiv.appendChild(playAgainButton);
+
+            // Append the container div to the body
+         document.body.appendChild(containerDiv);
         }, 1000);
-        let i = 0;
-        let z = 2;
-        let y = 1;
-        let x = 0;
-        let t1 = ['mé', 't', 'ro', 'é', 'lo', 'v', 'se', 'maî', 'tres', 'rec', 'teur', 'di', 're', 'ux', 'heu', 'boi', 'fram', 'se', 'que', 'ti', 'mous', 'ba', 'rq', 'ue'];
-        let t2 = ["metro.jpg", "bike.jpg", "maitresse.jpg", "directeur.jpg", "happy.jpg", "fromboise.jpg", "namousa.jpg", "boat.jpg"];
-        function changeContent() {
-            document.getElementById("change-content-btn").disabled = true;
+        return;
+    }
+    let elements = document.querySelectorAll('.text-container pre b');
+    let e = document.getElementById('c1');
+    let image = document.getElementById('main-image');
+    e.textContent = t1[i];
+    elements[0].textContent = t1[y];
+    elements[1].textContent = t1[z];
+    image.src = t2[x];
+    i += 3;
+    y += 3;
+    x++;
+    z += 3;
+    document.getElementById("result").textContent = "";
+    document.getElementById("change-content-btn").style.display = "none";
+    let b=document.getElementById("change-content-btn");
 
-            var seconds = 10;
-            var timer = setInterval(function () {
-                document.getElementById('timer').innerHTML = seconds + 's';
-                seconds--;
-                if (seconds < 0) {
-                    clearInterval(timer);
-                    document.getElementById('timer').innerHTML = "0s";
-                    let t=document.getElementById('timer');
-                     t.style.fontSize = "50px";
-                    document.getElementById('buttons-container').style.display = "flex"; // Show buttons
-                    document.getElementById('change-content-btn').style.pointerEvents = "auto"; // Enable the button
-                    document.getElementById("change-content-btn").disabled = false;
+    var textContainer = document.querySelector('.text-container');
+        var image1 = document.getElementById('image');
+        var imageBottom = image1.offsetTop + image1.offsetHeight;
+        var desiredDistance = -100;
+        var newTopPosition = imageBottom + desiredDistance;
+        textContainer.style.top = newTopPosition + 'px';
 
-                }
-            }, 1000);
-            document.getElementById("result").display="none";
-            document.getElementById("result").style.backgroundColor = "transparent";
 
-            if (z > t1.length) {
-                alert('Test terminée');
-                document.getElementById('result').display="block";
-                let b=document.getElementById('result');
-                b.textContent=score;
-                b.style.fontSize="20px";
-                return;
-            }
-            let elements = document.querySelectorAll('.text-container pre b');
-            let e = document.getElementById('c1');
-            let image = document.getElementById('main-image');
-            e.textContent = t1[i];
-            elements[0].textContent = t1[y];
-            elements[1].textContent = t1[z];
-            image.src = t2[x];
-            i += 3;
-            y += 3;
-            x++;
-            z += 3;
-            document.getElementById("result").textContent = "";
-            document.getElementById("change-content-btn").style.display = "none";
-            let b=document.getElementById("change-content-btn");
-            
-            var textContainer = document.querySelector('.text-container');
-                var image1 = document.getElementById('image');
-                var imageBottom = image1.offsetTop + image1.offsetHeight;
-                var desiredDistance = -100;
-                var newTopPosition = imageBottom + desiredDistance;
-                textContainer.style.top = newTopPosition + 'px';
+}
 
-            
-        }
+function playAudio() {
+    var audio = new Audio('music.mp3');
+    audio.play();
+}
 
-        function playAudio() {
-            var audio = new Audio('music.mp3');
-            audio.play();
-        }
-        let score
-        function checkAnswer() {
-            var userInput = document.getElementById("inputText").value.trim().toLowerCase(); // Get user's input and convert to lowercase
-            console.log("la valeur de i est " + i)
-            let answer;
-            if (i === 0) {
-                answer = "voiture";
-            } else if (i === 3) {
-                answer = "métro";
-            } else if (i === 6) {
-                answer = "vélo";
-            } else if (i === 9) {
-                answer = "maîtresse";
-            } else if (i === 12) {
-                answer = "directeur";
-            } else if (i === 15) {
-                answer = "heureux";
-            } else if (i === 18) {
-                answer = "framboise";
-            } else if (i === 21) {
-                answer = "moustique";
-            } else {
-                answer = "barque";
-            }
-            if (userInput === answer) {
-                var resultElement = document.getElementById("result");
-                resultElement.textContent = "Bravo! Votre réponse est correcte";
-                resultElement.style.display = "inline";
-                resultElement.style.fontSize = "20px";
-                resultElement.style.textAlign = "center";
-                resultElement.style.backgroundColor = "#00b909";
-                document.getElementById("change-content-btn").style.display = "inline-block";
-                let x=document.getElementById("inputText");
-                x.value="";
-                playAudio();
+let score = 0; // Initialisez la variable score
 
-                var textContainer = document.querySelector('.text-container');
-                var image = document.getElementById('image');
-                var imageBottom = image.offsetTop + image.offsetHeight;
-                var desiredDistance = -100;
-                var newTopPosition = imageBottom + desiredDistance;
-                textContainer.style.top = newTopPosition + 'px';
-                var textContainer = document.querySelector('.text-container');
-                textContainer.style.marginTop = "20px";
-                score++;
-                }
-            
-            else {
-                document.getElementById("result").textContent = "Désolé! Votre réponse est incorrecte";
-                var resultElement = document.getElementById("result");
-                resultElement.style.textAlign = "center";
+function checkAnswer() {
+    var userInput = document.getElementById("inputText").value.trim().toLowerCase(); // Get user's input and convert to lowercase
+    console.log("la valeur de i est " + i)
+    let answer;
+    if (i === 0) {
+        answer = "voiture";
+    } else if (i === 3) {
+        answer = "métro";
+    } else if (i === 6) {
+        answer = "vélo";
+    } else if (i === 9) {
+        answer = "maîtresse";
+    } else if (i === 12) {
+        answer = "directeur";
+    } else if (i === 15) {
+        answer = "heureux";
+    } else if (i === 18) {
+        answer = "framboise";
+    } else if (i === 21) {
+        answer = "moustique";
+    } else {
+        answer = "barque";
+    }
 
-                resultElement.style.fontSize = "22px";
-                document.getElementById("result").style.backgroundColor = "red";
-                document.getElementById("result").style.display = "block"; // Show the result
-                document.getElementById("change-content-btn").style.display = "none";
+    if (userInput === answer) {
+var resultElement = document.getElementById("result");
+resultElement.textContent = "Bravo! Votre réponse est correcte";
+resultElement.style.display = "inline";
+resultElement.style.fontSize = "20px";
+resultElement.style.textAlign = "center";
+resultElement.style.backgroundColor = "#00b909";
+resultElement.style.width = "350px"; // Set the width to 100% to ensure the entire text is within the box
+document.getElementById("change-content-btn").style.display = "inline-block";
+let x=document.getElementById("inputText");
+x.value="";
 
-                var textContainer = document.querySelector('.text-container');
-                var image = document.getElementById('image');
-                var imageBottom = image.offsetTop + image.offsetHeight;
-                var desiredDistance = -100;
-                var newTopPosition = imageBottom + desiredDistance;
-                textContainer.style.top = newTopPosition + 'px';
-                var textContainer = document.querySelector('.text-container');
-                textContainer.style.marginTop = "20px";
+playAudio();
 
-            }
-            document.getElementById("inputText").value = "";
-        }
-        document.getElementById("confirm-btn").addEventListener("click", checkAnswer);
+var textContainer = document.querySelector('.text-container');
+var image = document.getElementById('image');
+var imageBottom = image.offsetTop + image.offsetHeight;
+var desiredDistance = -100;
+var newTopPosition = imageBottom + desiredDistance;
+textContainer.style.top = newTopPosition + 'px';
+var textContainer = document.querySelector('.text-container');
+textContainer.style.marginTop = "20px";
+score++;
+} 
+
+else {
+var resultElement = document.getElementById("result");
+resultElement.textContent = "Désolé! Votre réponse est incorrecte";
+resultElement.style.display = "block";
+resultElement.style.fontSize = "22px";
+resultElement.style.textAlign = "center";
+resultElement.style.backgroundColor = "red";
+resultElement.style.width = "350px"; // Set the width to 100% to ensure the entire text is within the box
+document.getElementById("change-content-btn").style.display = "none";
+
+var textContainer = document.querySelector('.text-container');
+var image = document.getElementById('image');
+var imageBottom = image.offsetTop + image.offsetHeight;
+var desiredDistance = -100;
+var newTopPosition = imageBottom + desiredDistance;
+textContainer.style.top = newTopPosition + 'px';
+textContainer.style.marginTop = "20px";
+}
+
+document.getElementById("inputText").value = "";
+}
+document.getElementById("confirm-btn").addEventListener("click", checkAnswer);
     </script>
 </body>
 

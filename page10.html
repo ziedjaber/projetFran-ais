@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style5.css">
   <style>
     body {
-      background-image: url('bgz.jpg');
+      background-image: url('bgy.jpg');
       background-size: cover;
       background-repeat: no-repeat;
       background-position: top;
@@ -60,6 +60,8 @@
   </div>
 
   <script>
+    let score = 0;
+
     // script.js
     const questions = [
       {
@@ -88,38 +90,44 @@
     const countdownElement = document.getElementById('countdown');
     const changeQuestionBtn = document.getElementById('changeQuestionBtn');
     const answerImageElement = document.getElementById('answerImage');
-    let timer; // Declare timer variable globally
-
+    let timer; // Déclaration de la variable timer globalement
+  
     function displayQuestion() {
       questionElement.textContent = questions[currentQuestionIndex].question;
       answerInputElement.value = "";
       resultElement.textContent = "";
-      answerImageElement.src = ""; // Reset the image source
-      clearInterval(timer); // Clear the previous timer
-      startTimer(); // Start the timer again
+      answerImageElement.src = ""; // Réinitialiser la source de l'image
+      clearInterval(timer); // Effacer le minuteur précédent
+      startTimer(); // Démarrer à nouveau le minuteur
     }
-
+  
     function checkAnswer() {
-      const userAnswer = answerInputElement.value.trim().toLowerCase();
-      const correctAnswer = questions[currentQuestionIndex].answer.toLowerCase();
-      if (userAnswer === correctAnswer) {
-        resultElement.textContent = "Bravo!";
-        answerImageElement.src = questions[currentQuestionIndex].image;
-        correctAudio.play(); // Play correct sound effect
+  const userAnswer = answerInputElement.value.trim().toLowerCase();
+  const correctAnswer = questions[currentQuestionIndex].answer.toLowerCase();
+  if (userAnswer === correctAnswer) {
+    resultElement.textContent = "Bravo!";
+    answerImageElement.src = questions[currentQuestionIndex].image;
+    correctAudio.play();
+    // Incrémentation du score en cas de réponse correcte
+    score++;
+  } else {
+    resultElement.textContent = "La réponse est " + correctAnswer;
+    answerImageElement.src = questions[currentQuestionIndex].image;
+  }
+  // Vérification si toutes les questions ont été répondues
+  if (currentQuestionIndex === questions.length - 1) {
+    submitAnswerBtn.disabled = true; // Désactiver le bouton de soumission après la fin du test
+    changeQuestionBtn.disabled = true; // Désactiver le bouton de changement de question après la fin du test
+    // Afficher le score final
 
-      } else {
-        resultElement.textContent = "La réponse est "+correctAnswer;
-        answerImageElement.src = questions[currentQuestionIndex].image;
-      }
-      if (currentQuestionIndex === questions.length - 1) {
-        resultElement.textContent = "Test terminé!";
-        submitAnswerBtn.disabled = true; // Disable submit button after the test ends
-        changeQuestionBtn.disabled = true; // Disable change question button after the test ends
-      }
-    }
+    resultElement.textContent = "La réponse est " + correctAnswer+" "+" Score final: " + score + "/" + questions.length;
+    // Rediriger vers la page de résultats après un court délai
+    alert("test Términé");
+  }
+}
 
     function startTimer() {
-      let timeLeft = 10;
+      let timeLeft = 20;
       countdownElement.textContent = timeLeft;
       timer = setInterval(() => {
         timeLeft--;
@@ -130,18 +138,19 @@
         }
       }, 1000);
     }
-
+  
     submitAnswerBtn.addEventListener('click', () => {
       checkAnswer();
     });
-
+  
     changeQuestionBtn.addEventListener('click', () => {
       currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
       displayQuestion();
     });
-
-    // Initial setup
+  
+    // Configuration initiale
     displayQuestion();
   </script>
+  
 </body>
 </html>

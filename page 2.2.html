@@ -33,7 +33,7 @@
             top: 55%;
             transform: translateY(-50%);
             z-index: 2; /* Ensure the text appears above the image */
-            color: rgb(243, 203, 0); /* Set the text color */
+            color:  rgb(255, 251, 0); /* Set the text color */
             text-align: center; /* Align text to center */
             font-family: Arial, sans-serif; /* Specify font family */
         }
@@ -84,7 +84,7 @@
             background-color: rgb(63, 63, 63);
             color: #ffffff;
             border-radius: 50%; /* Make it circular */
-            display: flex;
+            display: none;
             justify-content: center;
             align-items: center;
             font-size: 40px;
@@ -126,7 +126,7 @@
         #change-content-btn {
             background-color: #4CAF50; /* Green background */
             border: none; /* No border */
-            color: rgb(243, 203, 0); /* Set the text color */
+            color: rgb(255, 251, 0); /* Set the text color */
             padding: 15px 32px; /* Padding */
             text-align: center; /* Center text */
             text-decoration: none; /* No text decoration */
@@ -200,7 +200,7 @@ input[type="text"]:focus {
     margin-bottom: 15px;
     font-size: 20px;
     display: inline;
-
+    
 }
     </style>
 </head>
@@ -228,7 +228,8 @@ input[type="text"]:focus {
         <button id="change-content-btn" style="color: white;background-color: #00b909;" onclick="changeContent()">Passer</button>
     </div>
     <script>
-        var seconds = 10;
+        var seconds = 1;
+        let score=0;
         var timer = setInterval(function () {
             document.getElementById('timer').innerHTML = seconds + 's';
             seconds--;
@@ -249,11 +250,11 @@ input[type="text"]:focus {
         let t2 = ["viande.jpg","trotinette.jpg","bouteille.jpg","bibron.jpg","stocks.jpg","c.png","abeille.jpg","papillon.jpg"];
 
         function changeContent() {
-            document.getElementById("change-content-btn").disabled = true;
 
-            var seconds = 10;
+            var seconds = 1;
             var timer = setInterval(function () {
                 document.getElementById('timer').innerHTML = seconds + 's';
+                document.getElementById('change-content-btn').style.pointerEvents = "auto";
                 seconds--;
                 if (seconds < 0) {
                     clearInterval(timer);
@@ -262,7 +263,6 @@ input[type="text"]:focus {
                      t.style.fontSize = "50px";
                     document.getElementById('buttons-container').style.display = "flex"; // Show buttons
                     document.getElementById('change-content-btn').style.pointerEvents = "auto"; // Enable the button
-                    document.getElementById("change-content-btn").disabled = false;
 
                 }
             }, 1000);
@@ -276,6 +276,7 @@ input[type="text"]:focus {
                 b.textContent=score;
                 b.style.fontSize="20px";
                 location.reload();
+                return;
             }
             let elements = document.querySelectorAll('.text-container pre b');
             let e = document.getElementById('c1');
@@ -328,24 +329,54 @@ input[type="text"]:focus {
             } else {
                 answer = "papillon";
             }
-            if (userInput === answer) {
-    var resultElement = document.getElementById("result");
-    resultElement.textContent = "Bravo! Votre réponse est correcte";
-    resultElement.style = "display: inline; font-size: 20px; text-align: center; background-color: #00b909;border-radius:15px";
-    document.getElementById("change-content-btn").style.display = "inline-block";
-    document.getElementById("inputText").value = "";
 
-    playAudio();
-    updateTextContainerPosition();
-    score++;
-} else {
+            if (userInput === answer) {
+                var resultElement = document.getElementById("result");
+                resultElement.textContent = "Bravo! Votre réponse est correcte";
+                resultElement.style = "display: inline; font-size: 20px; text-align: center; background-color: #00b909;border-radius:15px";
+                document.getElementById("change-content-btn").style.display = "inline-block";
+                document.getElementById("inputText").value = "";
+
+                playAudio();
+                updateTextContainerPosition();
+                score++;
+            } 
+
+else {
     var resultElement = document.getElementById("result");
     resultElement.textContent = "Désolé! Votre réponse est incorrecte";
     resultElement.style = "text-align: center; font-size: 22px; background-color: red; display: block;border-radius:15px";
     document.getElementById("change-content-btn").style.display = "none";
     updateTextContainerPosition();
 }
+if (score === 9) {
+        // Clear the body content
+        document.body.innerHTML = '';
 
+        setTimeout(function() {
+            // Create a div to contain the final score and the "Rejouer" button
+            var containerDiv = document.createElement("div");
+            containerDiv.style = "width: 400px; height: 130px;font-size:30px ;background-color: #008cff;color:white ; text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 10px;";
+
+            // Create a div to display the final score
+            var scoreDiv = document.createElement("div");
+            scoreDiv.textContent = "Score final: " + score + "/9";
+            scoreDiv.style = "font-size: 30px; color: white; line-height: 50px; border-bottom: 1px solid white;";
+            containerDiv.appendChild(scoreDiv);
+
+            // Create the "Rejouer" button
+            var playAgainButton = document.createElement("button");
+            playAgainButton.textContent = "Rejouer";
+            playAgainButton.onclick = function() {
+                location.reload(); // Reload the page to play again
+            };
+            playAgainButton.style = "margin-top: 20px;font-size:25px;padding: 10px 20px; background-color: #00b909; color: white; border: none; border-radius: 5px; cursor: pointer;text-align: center;";
+            containerDiv.appendChild(playAgainButton);
+
+            // Append the container div to the body
+            document.body.appendChild(containerDiv);
+        }, 1000);
+    }
 function updateTextContainerPosition() {
     var textContainer = document.querySelector('.text-container');
     var image = document.getElementById('image');
